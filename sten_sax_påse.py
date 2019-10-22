@@ -1,5 +1,7 @@
 #Vi importerar random modulen
 import random
+import time
+import getpass
 #Vi definerar variablerna
 val1 = 0
 val2 = 0
@@ -153,38 +155,68 @@ elakDatorNinja = '''
                                         `.`-._.-' _.'
                                           `-.__.-'
 '''
+pvp = '''
+       ,               ,
+       \              /
+        \\0          0/
+         |\/      \/|
+         |          |
+        / \        / \\
+   ____/___\______/___\_________ 
+'''
 
 #Vi gör en loop som loopar så länge det är sant annars så stänger vi av programet
 while loop: 
     runda = 1 
     point1 = 0
     point2 = 0
-    if input("Vill du köra?: y/N: ") == "y":
-        pc = input("Vem vill du spela mot?: pc/player: ")
-        if pc == pc:
+    if input("Vill du köra?: y/N: ").lower() == "y":
+        pc = input("Vem vill du spela mot?: pc/player: ").lower()
+        if pc == "pc":
             print(elakDatorNinja)
+        else:
+            print(pvp)
         while runda < 4:   
         #spelare 1 val av hand
-            val1 = input("Välj din hand: sten, sax, påse: ")
-            if val1 == "sten": 
-                val1 = 1
-            elif val1 == "sax":
-                val1 = 2
-            else:
-                val1 = 3
-
+            val1Loop = True
+            val2Loop = True
+            
+            while val1Loop:
+                val1 = getpass.getpass("spelare 1 välj din hand: sten, sax, påse: ").lower()
+                if val1 == "sten": 
+                    val1 = 1
+                    val1Loop = False
+                elif val1 == "sax":
+                    val1 = 2
+                    val1Loop = False
+                elif val1 == "påse":
+                    val1 = 3
+                    val1Loop = False
+                else:
+                    print("Du valde fel. Välj ett av de tre alternativen")
+                    val1Loop = True
+ 
             #spelare 2 val av hand
             if pc == "pc":
+                print("Datorn väljer...")
                 val2 = random.randint(1,3)
+                time.sleep(random.randint(1,5))
 
-            else: 
-                val2 = input("Välj din hand: sten, sax, påse: ")
-                if val2 == "sten": 
-                    val2 = 1
-                elif val2 == "sax":
-                    val2 = 2
-                else:
-                    val2 = 3
+            else:
+                while val2Loop:
+                    val2 = getpass.getpass("Spelare 2 välj din hand: sten, sax, påse: ").lower()
+                    if val2 == "sten": 
+                        val2 = 1
+                        val2Loop = False
+                    elif val2 == "sax":
+                        val2 = 2
+                        val2Loop = False
+                    elif val2 == "påse":
+                        val2 = 3
+                        val2Loop = False
+                    else:
+                        print("Du valde fel. Välj ett av de tre alternativen")
+                        val2Loop = True
 
             if val1 == val2:
                 pass 
@@ -214,3 +246,5 @@ while loop:
             print("Nästa runda. Poängen är: " + str(point1) + "-" + str(point2))
     else:
         loop = False
+print("Spelet avslutas. Tack för att du spelade.")
+time.sleep(2)
